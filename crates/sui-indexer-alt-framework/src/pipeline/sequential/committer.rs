@@ -258,6 +258,8 @@ pub(super) fn committer<H: Handler>(
                         }
                     };
 
+                    handler.post_commit(&batch).await;
+
                     debug!(
                         pipeline = H::NAME,
                         attempt,
