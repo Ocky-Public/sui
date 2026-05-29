@@ -83,6 +83,10 @@ pub trait Handler: Processor {
         batch: &Self::Batch,
         conn: &mut <Self::Store as Store>::Connection<'a>,
     ) -> anyhow::Result<usize>;
+
+    /// Called once per batch after a successful database transaction commit.
+    /// The default implementation is a no-op, so existing handlers need no changes.
+    async fn post_commit(&self, batch: &Self::Batch) {}
 }
 
 /// Configuration for a sequential pipeline

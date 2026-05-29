@@ -101,6 +101,8 @@ pub(super) fn committer<H: Handler>(
 
             let (affected, elapsed) = backoff::future::retry(backoff, commit).await?;
 
+            handler.post_commit(&batch).await;
+
             debug!(
                 pipeline = H::NAME,
                 affected,
